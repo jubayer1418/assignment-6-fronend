@@ -4,7 +4,7 @@ import { logout, setUser } from "../features/auth/authSlice";
 import { RootState } from "../store";
 
 const baseQuery = fetchBaseQuery({
-  baseUrl: "http://localhost:5000",
+  baseUrl: "https://assignment-6-backend-eight.vercel.app",
   credentials: "include",
   prepareHeaders: async (headers, { getState }) => {
     const token = (getState() as RootState)?.auth?.accessToken;
@@ -32,7 +32,7 @@ export const baseApi = createApi({
     if (result?.error?.status === 401) {
       console.log("Sending refresh token");
       const res = await fetch(
-        "http://localhost:5000/users/refresh-token",
+        "https://assignment-6-backend-eight.vercel.app/refresh-token",
         {
           method: "POST",
           credentials: "include",
