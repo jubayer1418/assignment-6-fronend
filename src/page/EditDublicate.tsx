@@ -50,20 +50,9 @@ export default function EditDublicate({ id }: { id: string }) {
                 productImage: productImageURL,
               };
 
-              const res = await addProduct(productData);
-              console.log(res);
-              if (res.error.data.success === false) {
-                toast.error(
-                  `${
-                    res.error.data.errorSources[0].message ||
-                    "something went wrong"
-                  }`,
-                  {
-                    id: toastId,
-                    duration: 2000,
-                  }
-                );
-              } else {
+              const res = await addProduct(productData).unwrap();
+
+              if (res.success === true) {
                 toast.success("Product added successfully!", {
                   id: toastId,
                   duration: 2000,
@@ -74,9 +63,9 @@ export default function EditDublicate({ id }: { id: string }) {
               throw new Error("Provided all parameters");
             }
           })
-          .catch((err) => {
+          .catch((error) => {
             toast.error(
-              `${err.errorSources.message || "something went wrong"}`,
+              `${error.data.errorSources[0].message || "something went wrong"}`,
               {
                 id: toastId,
                 duration: 2000,
@@ -93,19 +82,9 @@ export default function EditDublicate({ id }: { id: string }) {
           productImage: product?.data?.productImage,
         };
 
-        const res = await addProduct(productData);
-        console.log(res);
-        if (res.error.data.success === false) {
-          toast.error(
-            `${
-              res.error.data.errorSources[0].message || "something went wrong"
-            }`,
-            {
-              id: toastId,
-              duration: 2000,
-            }
-          );
-        } else {
+        const res = await addProduct(productData).unwrap();
+
+        if (res.success === true) {
           toast.success("Product added successfully!", {
             id: toastId,
             duration: 2000,
@@ -113,12 +92,14 @@ export default function EditDublicate({ id }: { id: string }) {
           handleOpen();
         }
       }
-    } catch (error) {
-      console.log(error);
-      toast.error(`${error.errorSources.message || "something went wrong"}`, {
-        id: toastId,
-        duration: 2000,
-      });
+    } catch (error: any) {
+      toast.error(
+        `${error.data.errorSources[0].message || "something went wrong"}`,
+        {
+          id: toastId,
+          duration: 2000,
+        }
+      );
     }
   };
   return (
