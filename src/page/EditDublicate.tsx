@@ -66,7 +66,7 @@ export default function EditDublicate({ id }: { id: string }) {
             }
           })
           .catch((err) => {
-            toast.error(err.message || `something went wrong`, {
+            toast.error(`${err.errorSources.message || "something went wrong"}`, {
               id: toastId,
               duration: 2000,
             });
@@ -94,7 +94,7 @@ export default function EditDublicate({ id }: { id: string }) {
         handleOpen();
       }
     } catch (error) {
-      toast.error(`something went wrong`, { id: toastId, duration: 2000 });
+      toast.error(`${error.errorSources.message || "something went wrong"}`, { id: toastId, duration: 2000 });
     }
   };
   return (
