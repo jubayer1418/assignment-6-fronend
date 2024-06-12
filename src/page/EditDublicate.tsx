@@ -52,8 +52,11 @@ export default function EditDublicate({ id }: { id: string }) {
 
               const res = await addProduct(productData);
 
-              if (res.error) {
-                throw new Error("Provided all parameters");
+              if (!res) {
+                toast.error(`${res?.errorSources?.message || "something went wrong"}`, {
+                  id: toastId,
+                  duration: 2000,
+                });
               }
 
               toast.success("Product added successfully!", {
@@ -82,9 +85,11 @@ export default function EditDublicate({ id }: { id: string }) {
         };
 
         const res = await addProduct(productData);
-
-        if (res.error) {
-          throw new Error("Provided all parameters");
+        if (!res) {
+          toast.error(`${res?.errorSources?.message || "something went wrong"}`, {
+            id: toastId,
+            duration: 2000,
+          });
         }
 
         toast.success("Product added successfully!", {
