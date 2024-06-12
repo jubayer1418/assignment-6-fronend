@@ -50,10 +50,14 @@ export default function EditDublicate({ id }: { id: string }) {
                 productImage: productImageURL,
               };
 
-              const res: any = await addProduct(productData);
-              if (res.success === false) {
+              const res = await addProduct(productData);
+              console.log(res);
+              if (res.error.data.success === false) {
                 toast.error(
-                  `${res?.errorSources?.message || "something went wrong"}`,
+                  `${
+                    res.error.data.errorSources[0].message ||
+                    "something went wrong"
+                  }`,
                   {
                     id: toastId,
                     duration: 2000,
@@ -89,10 +93,13 @@ export default function EditDublicate({ id }: { id: string }) {
           productImage: product?.data?.productImage,
         };
 
-        const res: any = await addProduct(productData);
-        if (res.success === false) {
+        const res = await addProduct(productData);
+        console.log(res);
+        if (res.error.data.success === false) {
           toast.error(
-            `${res?.errorSources?.message || "something went wrong"}`,
+            `${
+              res.error.data.errorSources[0].message || "something went wrong"
+            }`,
             {
               id: toastId,
               duration: 2000,
@@ -107,6 +114,7 @@ export default function EditDublicate({ id }: { id: string }) {
         }
       }
     } catch (error) {
+      console.log(error);
       toast.error(`${error.errorSources.message || "something went wrong"}`, {
         id: toastId,
         duration: 2000,
