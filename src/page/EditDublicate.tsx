@@ -50,29 +50,34 @@ export default function EditDublicate({ id }: { id: string }) {
                 productImage: productImageURL,
               };
 
-              const res = await addProduct(productData);
-
-              if (!res) {
-                toast.error(`${res?.errorSources?.message || "something went wrong"}`, {
+              const res: any = await addProduct(productData);
+              if (res.success === false) {
+                toast.error(
+                  `${res?.errorSources?.message || "something went wrong"}`,
+                  {
+                    id: toastId,
+                    duration: 2000,
+                  }
+                );
+              } else {
+                toast.success("Product added successfully!", {
                   id: toastId,
                   duration: 2000,
                 });
+                handleOpen();
               }
-
-              toast.success("Product added successfully!", {
-                id: toastId,
-                duration: 2000,
-              });
-              handleOpen();
             } else {
               throw new Error("Provided all parameters");
             }
           })
           .catch((err) => {
-            toast.error(`${err.errorSources.message || "something went wrong"}`, {
-              id: toastId,
-              duration: 2000,
-            });
+            toast.error(
+              `${err.errorSources.message || "something went wrong"}`,
+              {
+                id: toastId,
+                duration: 2000,
+              }
+            );
           });
       } else {
         const price = Number(data.price);
@@ -84,22 +89,28 @@ export default function EditDublicate({ id }: { id: string }) {
           productImage: product?.data?.productImage,
         };
 
-        const res = await addProduct(productData);
-        if (!res) {
-          toast.error(`${res?.errorSources?.message || "something went wrong"}`, {
+        const res: any = await addProduct(productData);
+        if (res.success === false) {
+          toast.error(
+            `${res?.errorSources?.message || "something went wrong"}`,
+            {
+              id: toastId,
+              duration: 2000,
+            }
+          );
+        } else {
+          toast.success("Product added successfully!", {
             id: toastId,
             duration: 2000,
           });
+          handleOpen();
         }
-
-        toast.success("Product added successfully!", {
-          id: toastId,
-          duration: 2000,
-        });
-        handleOpen();
       }
     } catch (error) {
-      toast.error(`${error.errorSources.message || "something went wrong"}`, { id: toastId, duration: 2000 });
+      toast.error(`${error.errorSources.message || "something went wrong"}`, {
+        id: toastId,
+        duration: 2000,
+      });
     }
   };
   return (
