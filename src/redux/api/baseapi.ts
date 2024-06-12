@@ -4,7 +4,7 @@ import { logout, setUser } from "../features/auth/authSlice";
 import { RootState } from "../store";
 //dkf
 const baseQuery = fetchBaseQuery({
-  baseUrl: import.meta.env.VITE_Local,
+  baseUrl: import.meta.env.VITE_Host,
   credentials: "include",
   prepareHeaders: async (headers, { getState }) => {
     const token = (getState() as RootState)?.auth?.accessToken;
@@ -32,7 +32,7 @@ export const baseApi = createApi({
     if (result?.error?.status === 401) {
       console.log("Sending refresh token");
       const res = await fetch(
-        `${import.meta.env.VITE_Local}/users/refresh-token`,
+        `${import.meta.env.VITE_Host}/users/refresh-token`,
         {
           method: "POST",
           credentials: "include",
