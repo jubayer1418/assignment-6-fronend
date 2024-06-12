@@ -55,14 +55,16 @@ export default function AddProductModal() {
               toast.error(res?.error?.data?.message);
             } else if (res.error) {
               throw new Error("Already added product");
+            }else{
+              toast.success("Product added successfully!", {
+                id: toastId,
+                duration: 2000,
+              });
+              router("/all-products")
+              reset();
             }
 
-            toast.success("Product added successfully!", {
-              id: toastId,
-              duration: 2000,
-            });
-            router("/all-products")
-            reset();
+           
           } else {
             throw new Error("Provided all parameters");
           }
